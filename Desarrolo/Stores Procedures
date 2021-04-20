@@ -1,0 +1,44 @@
+delimiter $$
+CREATE PROCEDURE RendicionDeHorasDia (IN id_persona INT, IN fecha DATE, IN horas_dia INT  )
+BEGIN
+    INSERT INTO asignacion (cantidad_horas_dia, cantidad_horas_semana, cantidad_horas_mes, fecha, participante_legajo, proyecto_nombre, rol_nombre)
+    SELECT horas_dia,horas_dia*5,horas_dia*20, fecha, p.participante_legajo, p.proyecto_nombre, p.rol_nombre
+    FROM participacion p
+    WHERE p.id = id_persona;
+END;
+$$
+
+
+delimiter $$
+CREATE PROCEDURE RendicionDeHorasSemana (IN id_persona INT, IN fecha DATE, IN horas_semana INT  )
+BEGIN
+    INSERT INTO asignacion (cantidad_horas_dia, cantidad_horas_semana, cantidad_horas_mes, fecha, participante_legajo, proyecto_nombre, rol_nombre)
+    SELECT horas_semana/5,horas_semana,horas_semana*4, fecha, p.participante_legajo, p.proyecto_nombre, p.rol_nombre
+    FROM participacion p
+    WHERE p.id = id_persona;
+END;
+$$
+
+delimiter $$
+CREATE PROCEDURE RendicionDeHorasMes (IN id_persona INT, IN fecha DATE, IN horas_mes INT  )
+BEGIN
+    INSERT INTO asignacion (cantidad_horas_dia, cantidad_horas_semana, cantidad_horas_mes, fecha, participante_legajo, proyecto_nombre, rol_nombre)
+    SELECT horas_mes/20,horas_mes/4,horas_mes, fecha, p.participante_legajo, p.proyecto_nombre, p.rol_nombre
+    FROM participacion p
+    WHERE p.id = id_persona;
+END;
+$$
+
+
+
+delimiter $$
+CREATE PROCEDURE CalcularLiquidacionMensual (IN id_asignacion INT )
+
+BEGIN
+	 
+    INSERT INTO liquidacion (nombre_rol, nombre_proyecto, cantDeHoras,fecha_liquidacion, usuario_liquidacion)
+    SELECT  a.rol_nombre, a.proyecto_nombre, a.cantidad_horas_mes, NOW(), a.participante_legajo 
+    FROM asignacion a
+    WHERE a.id= id_asignacion;
+END;
+$$
