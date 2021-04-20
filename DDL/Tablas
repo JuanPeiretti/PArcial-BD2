@@ -1,0 +1,43 @@
+CREATE TABLE participante(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    legajo INT,
+    nombre VARCHAR(50)
+);
+
+CREATE TABLE rol(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50)
+);
+
+CREATE TABLE proyecto(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50)
+);
+
+CREATE TABLE participacion(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    participante_legajo INT,
+    participante_nombre VARCHAR(50),
+    proyecto_nombre VARCHAR(50),
+    rol_nombre VARCHAR(50)
+);
+
+CREATE TABLE asignacion (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	cantidad_horas_dia INT,
+	cantidad_horas_semana INT,
+	cantidad_horas_mes int,
+	fecha DATE,
+	participante_legajo INT,
+	proyecto_nombre VARCHAR(50),
+   rol_nombre VARCHAR(50)
+)
+
+CREATE TABLE liquidacion(
+	 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre_rol VARCHAR(50),
+    nombre_proyecto VARCHAR(50),
+    cantDeHoras INT,
+    fecha_liquidacion DATETIME ,
+    usuario_liquidacion INT 
+);
